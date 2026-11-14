@@ -44,17 +44,17 @@ public class CarController : MonoBehaviour
 
         //Raycast test
 
-        RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.up, 1.0f, trackLayer);
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.up, 2.0f, trackLayer);
         if(hit.collider != null && throttleInput == 0.0f)
         {
             Debug.Log("Hit");
-            speed -= (acceleration * Time.fixedDeltaTime);
-            speed = Mathf.Clamp(speed, 0.0f, maxDriveSpeed);
+            //speed -= (acceleration * Time.fixedDeltaTime);
+            //speed = Mathf.Clamp(speed, 0.0f, maxDriveSpeed);
         }
     }
 
     private void Update()
     {
-        Debug.DrawRay(transform.position, transform.up * 1.0f, Color.red);
+        Debug.DrawRay(transform.position, transform.up * 2.0f, Color.red);
     }
 }
