@@ -2,13 +2,16 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Car Controlling Adapted from: https://www.youtube.com/watch?v=d7IY7mJECRk
 public class CarController : MonoBehaviour
 {
-    public float acceleration = 3.0f;
-    public float maxDriveSpeed = 10.0f;
-    public float steeringSpeedDegrees = 120.0f;
     public InputAction steering;
     public InputAction throttle;
+    public float acceleration = 3.0f;
+    public float friction = 1f;
+    public float maxDriveSpeed = 10.0f;
+    public float steerStrength = 120.0f;
+    public AnimationCurve steeringBySpeed;
     public LayerMask trackLayer;
 
     private Rigidbody2D rb;
@@ -34,13 +37,19 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float steerInput = steering.ReadValue<float>();
-        rb.MoveRotation(rb.rotation - steeringSpeedDegrees * Time.fixedDeltaTime * steerInput);
-
         float throttleInput = throttle.ReadValue<float>();
-        speed += (acceleration * Time.fixedDeltaTime) * throttleInput;
-        speed = Mathf.Clamp(speed, -maxDriveSpeed / 2, maxDriveSpeed);
+        if (throttleInput > 0.0f)
+            speed += (acceleration * Time.fixedDeltaTime);
+        else
+            speed -= friction * Time.fixedDeltaTime;
+
+        speed = Mathf.Clamp(speed, 0f, maxDriveSpeed);
         rb.linearVelocity = transform.up * speed;
+
+        float speedFraction = speed / maxDriveSpeed;
+        float steerFactor = steeringBySpeed.Evaluate(speedFraction) * steerStrength;
+        float steerInput = steering.ReadValue<float>();
+        rb.MoveRotation(rb.rotation - steerFactor * Time.fixedDeltaTime * steerInput);
 
         //Raycast test
 
