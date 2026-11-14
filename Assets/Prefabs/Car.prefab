@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2019082673634483373}
   - component: {fileID: 6812850820461821520}
   - component: {fileID: 1165835051353461265}
+  - component: {fileID: 1318147597705049475}
   - component: {fileID: 6408864884568228248}
   m_Layer: 6
   m_Name: Car
@@ -159,6 +160,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1318147597705049475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147923260868387106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ca45753faacfd4fb1ca71982cf9908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIController
+  trackLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,74 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c294b40b999e84fa1ee156613bd68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  steering:
-    m_Name: Steering
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bff9865d-10e7-4e76-94db-0ceff5779519
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 1D Axis
-      m_Id: 0818bb40-2fa5-4f60-9c69-1c124541ea2b
-      m_Path: 1DAxis
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Steering
-      m_Flags: 4
-    - m_Name: negative
-      m_Id: e93bbd19-83ed-4c1b-b873-7d66173d486e
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Steering
-      m_Flags: 8
-    - m_Name: positive
-      m_Id: 7e6c72bf-e2b7-43a6-99ec-c05ba289eeca
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Steering
-      m_Flags: 8
-    m_Flags: 0
-  throttle:
-    m_Name: Throttle
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4080b0cb-9179-4269-aaa0-a213e547dfb6
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 1D Axis
-      m_Id: 4899a40a-124b-4e6b-9b89-4f53c307deef
-      m_Path: 1DAxis
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Throttle
-      m_Flags: 4
-    - m_Name: negative
-      m_Id: add9109d-f9a2-4fed-9321-86e689f77c05
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Throttle
-      m_Flags: 8
-    - m_Name: positive
-      m_Id: b12ea114-8271-4e3c-b31b-2510e0b01475
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Throttle
-      m_Flags: 8
-    m_Flags: 0
+  steeringInput: 0
+  throttleInput: 0
   acceleration: 6
-  friction: 1.5
+  friction: 2.5
   maxDriveSpeed: 6
   steerStrength: 210
   steeringBySpeed:
@@ -265,6 +217,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  trackLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  speed: 0
