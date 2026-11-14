@@ -5,12 +5,13 @@ using UnityEngine.InputSystem;
 public class CarController : MonoBehaviour
 {
     public float acceleration = 3.0f;
-    public float maxSpeed = 10.0f;
+    public float maxDriveSpeed = 10.0f;
+    public float steeringSpeedDegrees = 120.0f;
     public InputAction steering;
     public InputAction throttle;
 
     private Rigidbody2D rb;
-    public float speed = 0.0f;
+    private float speed = 0.0f;
 
     public void OnEnable()
     {
@@ -32,18 +33,12 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        float steerInput = steering.ReadValue<float>();
+        rb.MoveRotation(rb.rotation - steeringSpeedDegrees * Time.fixedDeltaTime * steerInput);
+
+        float throttleInput = throttle.ReadValue<float>();
+        speed += (acceleration * Time.fixedDeltaTime) * throttleInput;
+        speed = Mathf.Clamp(speed, -maxDriveSpeed / 2, maxDriveSpeed);
         rb.linearVelocity = transform.up * speed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.rotation *= Quaternion.AngleAxis(
-            120.0f * steering.ReadValue<float>() * Time.deltaTime,
-            Vector3.back
-        );
-
-        speed += (acceleration * Time.deltaTime) * throttle.ReadValue<float>();
-        speed = Mathf.Clamp( speed, -maxSpeed / 2, maxSpeed );
     }
 }

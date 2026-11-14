@@ -394,8 +394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c294b40b999e84fa1ee156613bd68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  acceleration: 7
-  maxSpeed: 10
+  acceleration: 8
+  maxDriveSpeed: 10
+  steeringSpeedDegrees: 120
   steering:
     m_Name: Steering
     m_Type: 0
@@ -462,7 +463,6 @@ MonoBehaviour:
       m_Action: Throttle
       m_Flags: 8
     m_Flags: 0
-  speed: 0
 --- !u!60 &1727699125
 PolygonCollider2D:
   m_ObjectHideFlags: 0
