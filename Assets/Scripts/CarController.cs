@@ -9,6 +9,7 @@ public class CarController : MonoBehaviour
     public float steeringSpeedDegrees = 120.0f;
     public InputAction steering;
     public InputAction throttle;
+    public LayerMask trackLayer;
 
     private Rigidbody2D rb;
     private float speed = 0.0f;
@@ -40,5 +41,18 @@ public class CarController : MonoBehaviour
         speed += (acceleration * Time.fixedDeltaTime) * throttleInput;
         speed = Mathf.Clamp(speed, -maxDriveSpeed / 2, maxDriveSpeed);
         rb.linearVelocity = transform.up * speed;
+
+        //Raycast test
+
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, transform.up, 1.0f, trackLayer);
+        if(hit.collider != null)
+        {
+            Debug.Log("Hit");
+        }
+    }
+
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.up, Color.red);
     }
 }
