@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -61,9 +62,19 @@ public class CarController : MonoBehaviour
             //speed = Mathf.Clamp(speed, 0.0f, maxDriveSpeed);
         }
     }
-
     private void Update()
     {
         Debug.DrawRay(transform.position, transform.up * 2.0f, Color.red);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        speed = 0f;
+
+        Vector3 newPosition = new Vector3(0f, -3.6f, 0f);
+        gameObject.transform.position = newPosition;
+
+        Quaternion newRotation = Quaternion.Euler(0, 0, 90f);
+        gameObject.transform.rotation = newRotation;
     }
 }
