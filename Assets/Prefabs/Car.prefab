@@ -175,6 +175,7 @@ MonoBehaviour:
   trackLayer:
     serializedVersion: 2
     m_Bits: 8
+  rayDistance: 2
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,34 +188,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c294b40b999e84fa1ee156613bd68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  steeringInput: 0
-  throttleInput: 0
   acceleration: 6
-  friction: 2.5
-  maxDriveSpeed: 6
-  steerStrength: 210
-  steeringBySpeed:
+  friction: 4.5
+  maxSpeed: 6
+  steeringStrength: 220
+  steerignCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.049575973
-      value: 1.026307
-      inSlope: -1.5703294
-      outSlope: -1.5703294
+      time: -0.015029907
+      value: 1.0458374
+      inSlope: -1.5873203
+      outSlope: -1.5873203
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.021361494
+      outWeight: 0.027322708
     - serializedVersion: 3
-      time: 1
-      value: 0.40407562
-      inSlope: -0.05804576
-      outSlope: -0.05804576
+      time: 1.0151367
+      value: 0.3843956
+      inSlope: 0.0074345293
+      outSlope: 0.0074345293
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10507245
+      inWeight: 0.045329176
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speed: 0

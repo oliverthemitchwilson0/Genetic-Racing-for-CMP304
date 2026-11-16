@@ -16,13 +16,18 @@ public class AIController : MonoBehaviour
     void Start()
     {
         carController = GetComponent<CarController>();
+
+        //for(int i = 0; i < 3; i++)
+        //{
+        //    Debug.Log(UnityEngine.Random.Range(-1f, 1f));
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
-        carController.steeringInput = 0f;
-        carController.throttleInput = 1f;
+        carController.SetThrottleInput(1f);
+        carController.SetSteeringInput(0f);
 
         //Ray Loop
         Vector3 startPosition = transform.position;
@@ -43,12 +48,12 @@ public class AIController : MonoBehaviour
 
         //Temp Inputs
         if (rayResults[0] == true)
-            carController.throttleInput = 0f;
+            carController.SetThrottleInput(0f);
 
         if (rayResults[1] == true)
-            carController.steeringInput = 1f;
+            carController.SetSteeringInput(1f);
 
-        if(rayResults[2] == true)
-            carController.steeringInput = -1f;
+        if (rayResults[2] == true)
+            carController.SetSteeringInput(-1f);
     }
 }
