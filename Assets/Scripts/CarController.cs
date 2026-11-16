@@ -1,5 +1,3 @@
-using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,11 +12,26 @@ public class CarController : MonoBehaviour
 
     private Rigidbody2D rigidBody;
 
+    public bool debugInput = false;
     private float currentSpeed = 0f;
     private bool isActive = true;
 
+    public InputAction throttleDebugInput;
+    public InputAction steeringInputAction;
     private float steeringInput = 0f;
     private float throttleInput = 0f;
+
+    private void OnEnable()
+    {
+        throttleDebugInput.Enable();
+        steeringInputAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        throttleDebugInput.Disable();
+        steeringInputAction.Disable();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,8 +58,14 @@ public class CarController : MonoBehaviour
 
     private void Throttle()
     {
-        if (throttleInput > 0.0f)   //Throttle Positive: Accelerate.
-            currentSpeed += (acceleration * Time.fixedDeltaTime);
+        float input = 0f;
+        if (debugInput)
+            input = throttleDebugInput.ReadValue<float>();
+        else
+            input = throttleInput;
+
+        if (input != 0.0f)   //Throttle Positive: Accelerate.
+            currentSpeed += ((acceleration * input) * Time.fixedDeltaTime);
         else                        //Throttle anything else: apply friction.
             currentSpeed -= friction * Time.fixedDeltaTime;
 
@@ -58,9 +77,15 @@ public class CarController : MonoBehaviour
 
     private void Steering()
     {
+        float input = 0f;
+        if(debugInput)
+            input = steeringInputAction.ReadValue<float>();
+        else
+            input = steeringInput;
+
         float speedFraction = currentSpeed / maxSpeed; //Shift speed between 0 - 1 for curve evaluation.
         float steerFactor = steerignCurve.Evaluate(speedFraction) * steeringStrength; //Find the steer fact
-        rigidBody.MoveRotation(rigidBody.rotation - steerFactor * Time.fixedDeltaTime * steeringInput);
+        rigidBody.MoveRotation(rigidBody.rotation - (steerFactor * input) * Time.fixedDeltaTime);
     }
 
     public void SetThrottleInput(float throttle) {  throttleInput = throttle; }

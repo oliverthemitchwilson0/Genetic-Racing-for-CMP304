@@ -216,3 +216,70 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  debugInput: 0
+  throttleDebugInput:
+    m_Name: Throttle Debug Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 21637c88-6557-43d5-ba65-84518c0db53b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: f37e7066-9617-4979-8201-5c2e799d2775
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Throttle Debug Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 2b2ecbcb-9b0e-4683-a5ad-3db745043945
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Throttle Debug Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 29f7a51a-6986-4b19-b6ce-4058d6439cae
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Throttle Debug Input
+      m_Flags: 8
+    m_Flags: 0
+  steeringInputAction:
+    m_Name: Steering Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 63d7e1e8-b5e3-4e0f-8f30-db51dc98e32e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 287e1c8c-d16d-4483-8f84-93a8b5c686c6
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Steering Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 50b08eb3-636b-4ddd-b306-e68f1511449e
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Steering Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 5c3013fe-8098-4e13-8409-ecea6178ea2d
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Steering Input
+      m_Flags: 8
+    m_Flags: 0

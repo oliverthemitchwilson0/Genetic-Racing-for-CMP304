@@ -12,15 +12,24 @@ public class AIController : MonoBehaviour
     List<float> rayAngles = new List<float> { 0f, 25f, -25f };
     List<bool> rayResults = new List<bool> { false, false, false };
 
+    //Test
+    List<float> DNA = new List<float>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         carController = GetComponent<CarController>();
 
-        //for(int i = 0; i < 3; i++)
-        //{
-        //    Debug.Log(UnityEngine.Random.Range(-1f, 1f));
-        //}
+        //Test
+        //Create a throttle and steering bias for each ray.
+        for(int i = 0; i < 3; i++)
+        {
+            float throttleBias = UnityEngine.Random.Range(-1f, 1f);
+            DNA.Add(throttleBias);
+
+            float steeringBias = UnityEngine.Random.Range(-1f, 1f);
+            DNA.Add(steeringBias);
+        }
     }
 
     // Update is called once per frame
