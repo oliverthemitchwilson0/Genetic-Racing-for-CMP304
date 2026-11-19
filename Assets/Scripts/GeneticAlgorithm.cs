@@ -1,11 +1,11 @@
 using System;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 //Come back to this later: https://stackoverflow.com/questions/14622342/elitism-in-ga-should-i-let-the-elites-be-selected-as-parents
 public class GeneticAlgorithm<T>
 {
     //Config
+    private Func<T> geneGenerator;
     private int maxPopulationSize { get; set; }
     private int individualGeneCount { get; set; }
     private int transferRatio { get; set; }
@@ -15,10 +15,11 @@ public class GeneticAlgorithm<T>
     //Members
     private Individual<T>[] population { get; set; }
 
-    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> randomFunc)
+    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator)
     {
         maxPopulationSize = populationSize;
         individualGeneCount = geneCount;
+        this.geneGenerator = geneGenerator;
         transferRatio = 10;
         crossoverThresholdRatio = 30;
         mutateThreshold = 5;
@@ -28,11 +29,17 @@ public class GeneticAlgorithm<T>
 
         for (int i = 0; i < maxPopulationSize; i++)
         {
-            population[i] = new Individual<T>(individualGeneCount, randomFunc);
+            population[i] = new Individual<T>(individualGeneCount, geneGenerator);
         }
     }
 
-    public void EvaluatePopulationFitness()
+    public void Process() 
+    {
+        EvaluatePopulationFitness();
+        GenerateNextGeneration();
+    }
+
+    private void EvaluatePopulationFitness()
     {
         //Evaluate each fitness
         for (int i = 0; i < maxPopulationSize; i++)
@@ -46,7 +53,7 @@ public class GeneticAlgorithm<T>
         });
     }
 
-    public void GenerateNextGeneration() 
+    private void GenerateNextGeneration() 
     {
         //Create array of the next generation.
         Individual<T>[] nextGeneration = new Individual<T>[maxPopulationSize];
@@ -58,19 +65,23 @@ public class GeneticAlgorithm<T>
         //Begin crossover between a percentage of the previous generation for the rest of the next generation.
             //Mutate child
         int crossoverThreshold = maxPopulationSize * crossoverThresholdRatio / 100;
-        int newIndivdualCount = maxPopulationSize - transferCount;
         for(int i = transferCount; i < maxPopulationSize; i++) 
         {
             //Get references to two random parents.
             ref Individual<T> a = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
             ref Individual<T> b = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
-            nextGeneration[i] = SinglePointCrossover(ref a, ref b);
+
+            Individual<T> child = SinglePointCrossover(ref a, ref b);
+            Mutate(ref child);
+
+            nextGeneration[i] = child;
         }
 
         //Set population to the enxt generation.
         population = nextGeneration;
     }
 
+    //Classes in C# are automatically passed by reference 
     private Individual<T> SinglePointCrossover(ref Individual<T> a, ref Individual<T>b) 
     {
         //Select random cut point oof gene length.
@@ -84,16 +95,18 @@ public class GeneticAlgorithm<T>
         Array.Copy(a.genes, 0, crossedGenes, 0, cutPoint);
         Array.Copy(b.genes, cutPoint, crossedGenes, cutPoint, geneLength - cutPoint);
 
-        //Call Mutate on newly greated gene array.
-
         //Return new Individual with gene array.
         return new Individual<T>(in crossedGenes);
     }
 
-    private void Mutate(ref float[] x) 
+    private void Mutate(ref Individual<T> x) 
     {
-        //For each gene in array
-            //Weigh chance with mutateThreshold. if true:
-                //Overwrite gene with random gene.
+        for (int i = 0; i < x.genes.Length; i++)
+        {
+            if(UnityEngine.Random.Range(0, 100) < mutateThreshold) 
+            {
+                x.genes[i] = geneGenerator();
+            }
+        }
     }
 }
