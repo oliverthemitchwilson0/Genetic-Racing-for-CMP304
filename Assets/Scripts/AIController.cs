@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
+    //Config
     public LayerMask trackLayer;
     public float rayDistance = 2f;
+    private CarController carController;
 
-    CarController carController;
-
-    List<float> rayAngles = new List<float> { 0f, 25f, -25f };
-    List<bool> rayResults = new List<bool> { false, false, false };
-
-    //Test
-    private Individual<float> DNA;
+    //Member
+    public float[] genes { private get; set; }
+    private List<float> rayAngles = new List<float> { 0f, 25f, -25f };
+    private List<bool> rayResults = new List<bool> { false, false, false };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         carController = GetComponent<CarController>();
-        DNA = new Individual<float>(3, GetFloatRNG);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(genes.Length == 0) return;
+
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
 
@@ -47,18 +47,12 @@ public class AIController : MonoBehaviour
 
         //Temp Inputs
         if (rayResults[0] == true)
-            carController.SetThrottleInput(DNA.genes[0]);
+            carController.SetThrottleInput(genes[0]);
 
         if (rayResults[1] == true)
-            carController.SetSteeringInput(DNA.genes[1]);
+            carController.SetSteeringInput(genes[1]);
 
         if (rayResults[2] == true)
-            carController.SetSteeringInput(DNA.genes[2]);
-    }
-
-    //temp
-    float GetFloatRNG()
-    {
-        return UnityEngine.Random.Range(-1f, 1f);
+            carController.SetSteeringInput(genes[2]);
     }
 }

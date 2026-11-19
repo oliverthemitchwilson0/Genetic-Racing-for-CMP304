@@ -13,7 +13,8 @@ public class GeneticAlgorithm<T>
     private int mutateThreshold {  get; set; }
 
     //Members
-    private Individual<T>[] population { get; set; }
+    public int generation { get; set; }
+    public Individual<T>[] population { get; private set; }
 
     public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator)
     {
@@ -79,6 +80,7 @@ public class GeneticAlgorithm<T>
 
         //Set population to the enxt generation.
         population = nextGeneration;
+        generation++;
     }
 
     //Classes in C# are automatically passed by reference 

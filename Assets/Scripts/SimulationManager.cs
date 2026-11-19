@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
-    //Simulation Config
+    //Config
     public GameObject carPrefab;
     public int simulationCount = 30;
 
+    //Members
     private GeneticAlgorithm<float> algorithm;
+    private AIController[] controllers;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        algorithm = new GeneticAlgorithm<float>(simulationCount, 3, GetRandom);
+        algorithm = new GeneticAlgorithm<float>(simulationCount, 3, GeneGenerator);
+        controllers = new AIController[simulationCount];
 
         for (int i = 0; i < simulationCount; i++)
         {
-            Instantiate(carPrefab);
+            GameObject gameObject = Instantiate(carPrefab);
+            controllers[i] = gameObject.GetComponent<AIController>();
+            controllers[i].genes = algorithm.population[i].genes;
         }
     }
 
@@ -25,7 +30,7 @@ public class SimulationManager : MonoBehaviour
         
     }
 
-    float GetRandom()
+    float GeneGenerator()
     {
         return UnityEngine.Random.Range(-1f, 1f);
     }
