@@ -11,22 +11,34 @@ public class AIController : MonoBehaviour
 
     //Member
     public float[] genes { private get; set; }
+    public bool isActive { get; private set; } = true;
     private List<float> rayAngles = new List<float> { 0f, 25f, -25f };
     private List<bool> rayResults = new List<bool> { false, false, false };
+
+    //Member - Tracking
+    public float distanceTraveled { get; private set; }
+    private Vector3 previousPosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         carController = GetComponent<CarController>();
+        previousPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isActive) return;
         if(genes.Length == 0) return;
 
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
+
+        //Track Distance.
+        Vector3 currentPosiiton = transform.position;
+        distanceTraveled += Vector3.Distance(currentPosiiton, previousPosition);
+        previousPosition = currentPosiiton;
 
         //Ray Loop
         Vector3 startPosition = transform.position;
@@ -54,5 +66,20 @@ public class AIController : MonoBehaviour
 
         if (rayResults[2] == true)
             carController.SetSteeringInput(genes[2]);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log(distanceTraveled);
+    }
+
+    public void Destroy() 
+    {
+        DestroyImmediate(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isActive = false;
     }
 }

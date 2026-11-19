@@ -14,7 +14,6 @@ public class CarController : MonoBehaviour
 
     public bool debugInput = false;
     private float currentSpeed = 0f;
-    private bool isActive = true;
 
     public InputAction throttleDebugInput;
     public InputAction steeringInputAction;
@@ -43,17 +42,6 @@ public class CarController : MonoBehaviour
     {
         Throttle();
         Steering();
-    }
-
-    private void Update()
-    {
-        if (!isActive)
-            DestroyImmediate(gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        isActive = false;
     }
 
     private void Throttle()
