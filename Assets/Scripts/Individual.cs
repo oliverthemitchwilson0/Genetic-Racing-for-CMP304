@@ -4,8 +4,9 @@ using UnityEngine;
 public class Individual<T>
 {
     public T[] genes { get; private set; }
+    public int fitness { get; private set; }
 
-    private System.Random random;
+    //private System.Random random;
 
     public Individual(int size, Func<T> randomFunc)
     {
