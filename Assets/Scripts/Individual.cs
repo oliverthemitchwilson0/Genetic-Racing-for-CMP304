@@ -19,4 +19,11 @@ public class Individual<T>
             genes[i] = randomFunc();
         }
     }
+
+    public void EvaluateFitness() 
+    {
+        //Reset Fitness
+
+        //Evaluate Fitness
+    }
 }

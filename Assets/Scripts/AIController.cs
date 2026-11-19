@@ -56,6 +56,7 @@ public class AIController : MonoBehaviour
             carController.SetSteeringInput(DNA.genes[2]);
     }
 
+    //temp
     float GetFloatRNG()
     {
         return UnityEngine.Random.Range(-1f, 1f);
