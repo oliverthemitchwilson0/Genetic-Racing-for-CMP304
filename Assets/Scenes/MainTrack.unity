@@ -148,8 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9eb35a6076b4974cb1fdf36a406a80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimulationManager
+  simulationSpeed: 5
   carPrefab: {fileID: 7147923260868387106, guid: 8ae93d8d33e6ab3478029ab62fd794ec, type: 3}
-  simulationCount: 30
+  simulationCount: 50
 --- !u!4 &335210602
 Transform:
   m_ObjectHideFlags: 0

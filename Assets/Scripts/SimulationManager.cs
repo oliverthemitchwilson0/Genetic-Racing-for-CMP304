@@ -3,6 +3,7 @@ using UnityEngine;
 public class SimulationManager : MonoBehaviour
 {
     //Config
+    public float simulationSpeed = 1f;
     public GameObject carPrefab;
     public int simulationCount = 30;
     private int geneCount = 10;
@@ -29,6 +30,8 @@ public class SimulationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Time.timeScale = simulationSpeed;
+
         int unactiveCounter = 0;
         foreach (AIController controller in controllers)
         {

@@ -20,6 +20,10 @@ public class AIController : MonoBehaviour
     public float distanceTraveled { get; private set; }
     private Vector3 previousPosition;
 
+    //Member - Stuck Detection
+    private Vector3 lastCheckedPosition;
+    private float stuckTimer = 0f;
+
     public void Destroy()
     {
         DestroyImmediate(gameObject);
@@ -30,6 +34,7 @@ public class AIController : MonoBehaviour
     {
         carController = GetComponent<CarController>();
         previousPosition = transform.position;
+        lastCheckedPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -41,13 +46,13 @@ public class AIController : MonoBehaviour
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
 
-        //Stuck Detection
-
-
         //AI Process
         TrackData();
         ProcessRayInput();
         ProcessDescision();
+
+        //Stuck Detection
+        IsStuck();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -99,6 +104,19 @@ public class AIController : MonoBehaviour
         previousPosition = currentPosiiton;
     }
 
+    private void IsStuck()
+    {
+        stuckTimer += Time.deltaTime;
+
+        if(stuckTimer > 2f) 
+        {
+            Vector3 currentPosiiton = transform.position;
+            float distance =  Vector3.Distance(currentPosiiton, lastCheckedPosition);
+            if (distance < 0.1f) SetActive(false);
+            lastCheckedPosition = currentPosiiton;
+            stuckTimer -= 2f;
+        }
+    }
 
     private void SetActive(bool active) 
     {
