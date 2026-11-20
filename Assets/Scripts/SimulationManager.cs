@@ -6,17 +6,19 @@ public class SimulationManager : MonoBehaviour
     public float simulationSpeed = 1f;
     public GameObject carPrefab;
     public int simulationCount = 30;
+    public int transferRatio = 10;
+    public int crossoverThresholdRatio = 30;
+    public int mutateThreshold = 5;
     private int geneCount = 10;
 
     //Members
     private GeneticAlgorithm<float> algorithm;
     private AIController[] controllers;
-    private bool simulationInProgress = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        algorithm = new GeneticAlgorithm<float>(simulationCount, geneCount, GeneGenerator, RetrieveFitnessData);
+        algorithm = new GeneticAlgorithm<float>(simulationCount, geneCount, GeneGenerator, RetrieveFitnessData, transferRatio, crossoverThresholdRatio, mutateThreshold);
         controllers = new AIController[simulationCount];
 
         for (int i = 0; i < simulationCount; i++)

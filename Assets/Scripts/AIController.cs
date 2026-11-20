@@ -89,8 +89,9 @@ public class AIController : MonoBehaviour
             }
         }
 
-        carController.SetThrottleInput(genes[0 + priorityIndex]);
-        carController.SetSteeringInput(genes[1 + priorityIndex]);
+        int index = priorityIndex * 2;
+        carController.SetThrottleInput(genes[index]);
+        carController.SetSteeringInput(genes[index + 1]);
     }
 
     private void TrackData() 

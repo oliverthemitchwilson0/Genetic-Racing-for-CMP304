@@ -17,15 +17,15 @@ public class GeneticAlgorithm<T>
     public int generation { get; set; }
     public Individual<T>[] population { get; private set; }
 
-    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, Func<int, int> getFitnessData)
+    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, Func<int, int> getFitnessData, int transferRatio, int crossoverThresholdRatio, int mutateThreshold)
     {
         maxPopulationSize = populationSize;
         individualGeneCount = geneCount;
         this.geneGenerator = geneGenerator;
         this.getFitnessData = getFitnessData;
-        transferRatio = 10;
-        crossoverThresholdRatio = 30;
-        mutateThreshold = 10;
+        this.transferRatio = transferRatio;
+        this.crossoverThresholdRatio = crossoverThresholdRatio;
+        this.mutateThreshold = mutateThreshold;
         generation = 1;
 
         //Generate initial population
