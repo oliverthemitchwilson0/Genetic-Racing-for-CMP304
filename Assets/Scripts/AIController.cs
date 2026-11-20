@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ public class AIController : MonoBehaviour
     //Member
     public float[] genes { private get; set; }
     public bool isActive { get; private set; } = true;
-    private List<float> rayAngles = new List<float> { 0f, 25f, -25f };
-    private List<bool> rayResults = new List<bool> { false, false, false };
+    private float[] rayAngles = new float[]{ 0f, 36f, 72f, -36f, -72f };
+    private bool[] rayResults = new bool[]{ false, false, false, false, false };
 
     //Member - Tracking
     public float distanceTraveled { get; private set; }
@@ -35,18 +36,28 @@ public class AIController : MonoBehaviour
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
 
-        //Track Distance.
-        Vector3 currentPosiiton = transform.position;
-        distanceTraveled += Vector3.Distance(currentPosiiton, previousPosition);
-        previousPosition = currentPosiiton;
+        TrackData();
+        ProcessRayInput();
 
-        //Ray Loop
-        Vector3 startPosition = transform.position;
-        Vector3 startDirection = transform.up;
-        for(int i = 0; i < rayAngles.Count; i++) 
+        //Temp Inputs
+        //if (rayResults[0] == true)
+        //    carController.SetThrottleInput(genes[0]);
+
+        //if (rayResults[1] == true)
+        //    carController.SetSteeringInput(genes[1]);
+
+        //if (rayResults[2] == true)
+        //    carController.SetSteeringInput(genes[2]);
+    }
+
+    private void ProcessRayInput() 
+    {
+        Vector3 rayStartPosition = transform.position;
+        Vector3 objDirection = transform.up;
+        for (int i = 0; i < rayAngles.Length; i++)
         {
-            Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * startDirection;
-            RaycastHit2D hit = Physics2D.Raycast(startPosition, rayDirection, rayDistance, trackLayer);
+            Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * objDirection;
+            RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistance, trackLayer);
             if (hit.collider != null)
             {
                 rayResults[i] = true;
@@ -54,23 +65,21 @@ public class AIController : MonoBehaviour
             else
                 rayResults[i] = false;
 
-            Debug.DrawRay(startPosition, rayDirection * rayDistance, Color.red);
+            Debug.DrawRay(rayStartPosition, rayDirection * rayDistance, rayResults[i] ? Color.green : Color.red);
         }
+    }
 
-        //Temp Inputs
-        if (rayResults[0] == true)
-            carController.SetThrottleInput(genes[0]);
-
-        if (rayResults[1] == true)
-            carController.SetSteeringInput(genes[1]);
-
-        if (rayResults[2] == true)
-            carController.SetSteeringInput(genes[2]);
+    private void TrackData() 
+    {
+        //Track distance traveled.
+        Vector3 currentPosiiton = transform.position;
+        distanceTraveled += Vector3.Distance(currentPosiiton, previousPosition);
+        previousPosition = currentPosiiton;
     }
 
     private void OnDestroy()
     {
-        Debug.Log(distanceTraveled);
+        
     }
 
     public void Destroy() 
