@@ -5,6 +5,7 @@ public class SimulationManager : MonoBehaviour
     //Config
     public GameObject carPrefab;
     public int simulationCount = 30;
+    private int geneCount = 10;
 
     //Members
     private GeneticAlgorithm<float> algorithm;
@@ -14,7 +15,7 @@ public class SimulationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        algorithm = new GeneticAlgorithm<float>(simulationCount, 3, GeneGenerator, RetrieveFitnessData);
+        algorithm = new GeneticAlgorithm<float>(simulationCount, geneCount, GeneGenerator, RetrieveFitnessData);
         controllers = new AIController[simulationCount];
 
         for (int i = 0; i < simulationCount; i++)

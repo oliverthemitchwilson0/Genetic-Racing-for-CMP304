@@ -14,11 +14,16 @@ public class AIController : MonoBehaviour
     public float[] genes { private get; set; }
     public bool isActive { get; private set; } = true;
     private float[] rayAngles = new float[]{ 0f, 36f, 72f, -36f, -72f };
-    private bool[] rayResults = new bool[]{ false, false, false, false, false };
+    private float[] rayResults = new float[5];
 
     //Member - Tracking
     public float distanceTraveled { get; private set; }
     private Vector3 previousPosition;
+
+    public void Destroy()
+    {
+        DestroyImmediate(gameObject);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,18 +41,18 @@ public class AIController : MonoBehaviour
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
 
+        //Stuck Detection
+
+
+        //AI Process
         TrackData();
         ProcessRayInput();
+        ProcessDescision();
+    }
 
-        //Temp Inputs
-        //if (rayResults[0] == true)
-        //    carController.SetThrottleInput(genes[0]);
-
-        //if (rayResults[1] == true)
-        //    carController.SetSteeringInput(genes[1]);
-
-        //if (rayResults[2] == true)
-        //    carController.SetSteeringInput(genes[2]);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        SetActive(false);
     }
 
     private void ProcessRayInput() 
@@ -58,37 +63,47 @@ public class AIController : MonoBehaviour
         {
             Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * objDirection;
             RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistance, trackLayer);
-            if (hit.collider != null)
-            {
-                rayResults[i] = true;
-            }
-            else
-                rayResults[i] = false;
+            rayResults[i] = hit.fraction;
 
-            Debug.DrawRay(rayStartPosition, rayDirection * rayDistance, rayResults[i] ? Color.green : Color.red);
+            //Debug.Log(hit.fraction);
+
+            Debug.DrawRay(rayStartPosition, rayDirection * rayDistance, hit ? Color.green : Color.red);
         }
+    }
+
+    private void ProcessDescision()
+    {
+        float lowestResult = float.MaxValue;
+        int priorityIndex = 0;
+        for(int i = 0; i < rayResults.Length; i++) 
+        {
+            if (rayResults[i] < lowestResult)
+            {
+                lowestResult = rayResults[i];
+                priorityIndex = i;
+            }
+        }
+
+        carController.SetThrottleInput(genes[0 + priorityIndex]);
+        carController.SetSteeringInput(genes[1 + priorityIndex]);
     }
 
     private void TrackData() 
     {
         //Track distance traveled.
         Vector3 currentPosiiton = transform.position;
+
+        //if(currentPosiiton == previousPosition) isActive = false;
+
         distanceTraveled += Vector3.Distance(currentPosiiton, previousPosition);
         previousPosition = currentPosiiton;
     }
 
-    private void OnDestroy()
-    {
-        
-    }
 
-    public void Destroy() 
+    private void SetActive(bool active) 
     {
-        DestroyImmediate(gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        isActive = false;
+        isActive = active;
+        carController.SetThrottleInput(0f);
+        carController.SetSteeringInput(0f);
     }
 }
