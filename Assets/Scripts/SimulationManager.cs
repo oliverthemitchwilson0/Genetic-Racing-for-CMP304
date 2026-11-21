@@ -23,7 +23,7 @@ public class SimulationManager : MonoBehaviour
 
         for (int i = 0; i < simulationCount; i++)
         {
-            GameObject gameObject = Instantiate(carPrefab);
+            GameObject gameObject = Instantiate(carPrefab, transform.position, transform.rotation);
             controllers[i] = gameObject.GetComponent<AIController>();
             controllers[i].genes = algorithm.population[i].genes;
         }

@@ -75,6 +75,9 @@ public class GeneticAlgorithm<T>
             ref Individual<T> a = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
             ref Individual<T> b = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
 
+            while(b == a)
+                b = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
+
             Individual<T> child = SinglePointCrossover(ref a, ref b);
             Mutate(ref child);
 

@@ -113,7 +113,7 @@ public class AIController : MonoBehaviour
         {
             Vector3 currentPosiiton = transform.position;
             float distance =  Vector3.Distance(currentPosiiton, lastCheckedPosition);
-            if (distance < 0.1f) SetActive(false);
+            if (distance < 0.5f) SetActive(false);
             lastCheckedPosition = currentPosiiton;
             stuckTimer -= 2f;
         }
