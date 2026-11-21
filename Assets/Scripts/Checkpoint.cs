@@ -2,20 +2,14 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int index = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        AIController a = collision.gameObject.GetComponent<AIController>();
-        //if(a != null) a.SetActive(false);
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Car")) 
+        {
+            AIFitness aiFitness = collision.gameObject.GetComponent<AIFitness>();
+            aiFitness.CheckpointReached(index);
+        }
     }
 }

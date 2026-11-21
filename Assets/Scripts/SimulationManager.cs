@@ -13,20 +13,15 @@ public class SimulationManager : MonoBehaviour
 
     //Members
     private GeneticAlgorithm<float> algorithm;
+    private GameObject[] objects;
     private AIController[] controllers;
+    private AIFitness[] aiFitness;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        algorithm = new GeneticAlgorithm<float>(simulationCount, geneCount, GeneGenerator, RetrieveFitnessData, transferRatio, crossoverThresholdRatio, mutateThreshold);
-        controllers = new AIController[simulationCount];
-
-        for (int i = 0; i < simulationCount; i++)
-        {
-            GameObject gameObject = Instantiate(carPrefab, transform.position, transform.rotation);
-            controllers[i] = gameObject.GetComponent<AIController>();
-            controllers[i].genes = algorithm.population[i].genes;
-        }
+        algorithm = new GeneticAlgorithm<float>(simulationCount, geneCount, GeneGenerator, transferRatio, crossoverThresholdRatio, mutateThreshold);
+        CreateNewSimulationObjects();
     }
 
     // Update is called once per frame
@@ -35,40 +30,49 @@ public class SimulationManager : MonoBehaviour
         Time.timeScale = simulationSpeed;
 
         int unactiveCounter = 0;
-        foreach (AIController controller in controllers)
+        foreach (GameObject car in objects)
         {
-            if(!controller.isActive)
+            if(!car.GetComponent<AIController>().isActive)
                 unactiveCounter++;
         }
 
         if(unactiveCounter == simulationCount) 
         {
+            //Assign each Induvidual's fitness with the evaluated fitness.
+            for(int i = 0; i < simulationCount; i++) 
+            {
+                algorithm.population[i].fitness = aiFitness[i].EvaluateFitness();
+            }
+
             algorithm.Process();
 
             //Reset sim
             for(int i = 0; i < simulationCount; i++) 
             {
-                controllers[i].Destroy();
+                DestroyImmediate(objects[i]);
             }
 
-            controllers = new AIController[simulationCount];
+            CreateNewSimulationObjects();
+        }
+    }
 
-            for (int i = 0; i < simulationCount; i++)
-            {
-                GameObject gameObject = Instantiate(carPrefab);
-                controllers[i] = gameObject.GetComponent<AIController>();
-                controllers[i].genes = algorithm.population[i].genes;
-            }
+    private void CreateNewSimulationObjects() 
+    {
+        objects = new GameObject[simulationCount];
+        controllers = new AIController[simulationCount];
+        aiFitness = new AIFitness[simulationCount];
+
+        for (int i = 0; i < simulationCount; i++)
+        {
+            objects[i] = Instantiate(carPrefab, transform.position, transform.rotation);
+            controllers[i] = objects[i].GetComponent<AIController>();
+            aiFitness[i] = objects[i].GetComponent<AIFitness>();
+            controllers[i].genes = algorithm.population[i].genes;
         }
     }
 
     float GeneGenerator()
     {
         return UnityEngine.Random.Range(-1f, 1f);
-    }
-
-    int RetrieveFitnessData(int index) 
-    {
-        return (int)controllers[index].distanceTraveled;
     }
 }

@@ -6,7 +6,6 @@ public class GeneticAlgorithm<T>
 {
     //Config
     private Func<T> geneGenerator;
-    private Func<int, int> getFitnessData;
     private int maxPopulationSize { get; set; }
     private int individualGeneCount { get; set; }
     private int transferRatio { get; set; }
@@ -17,12 +16,11 @@ public class GeneticAlgorithm<T>
     public int generation { get; set; }
     public Individual<T>[] population { get; private set; }
 
-    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, Func<int, int> getFitnessData, int transferRatio, int crossoverThresholdRatio, int mutateThreshold)
+    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, int transferRatio, int crossoverThresholdRatio, int mutateThreshold)
     {
         maxPopulationSize = populationSize;
         individualGeneCount = geneCount;
         this.geneGenerator = geneGenerator;
-        this.getFitnessData = getFitnessData;
         this.transferRatio = transferRatio;
         this.crossoverThresholdRatio = crossoverThresholdRatio;
         this.mutateThreshold = mutateThreshold;
@@ -33,24 +31,18 @@ public class GeneticAlgorithm<T>
 
         for (int i = 0; i < maxPopulationSize; i++)
         {
-            population[i] = new Individual<T>(individualGeneCount, geneGenerator, getFitnessData);
+            population[i] = new Individual<T>(individualGeneCount, geneGenerator);
         }
     }
 
     public void Process() 
     {
-        EvaluatePopulationFitness();
+        SortPopulation();
         CreateNextGeneration();
     }
 
-    private void EvaluatePopulationFitness()
+    private void SortPopulation()
     {
-        //Evaluate each fitness
-        for (int i = 0; i < maxPopulationSize; i++)
-        {
-            population[i].EvaluateFitness(i);
-        }
-
         //Sort in decending order.
         Array.Sort(population, (a, b) => {
             return b.fitness.CompareTo(a.fitness);
@@ -87,7 +79,9 @@ public class GeneticAlgorithm<T>
         //Set population to the enxt generation.
         population = nextGeneration;
         generation++;
-        Debug.Log(generation);
+
+        string str = "Generation: " + generation.ToString();
+        Debug.Log(str);
     }
 
     //Classes in C# are automatically passed by reference 
@@ -105,7 +99,7 @@ public class GeneticAlgorithm<T>
         Array.Copy(b.genes, cutPoint, crossedGenes, cutPoint, geneLength - cutPoint);
 
         //Return new Individual with gene array.
-        return new Individual<T>(in crossedGenes, getFitnessData);
+        return new Individual<T>(in crossedGenes);
     }
 
     private void Mutate(ref Individual<T> x) 

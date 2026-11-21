@@ -16,10 +16,6 @@ public class AIController : MonoBehaviour
     private float[] rayAngles = new float[]{ 0f, 36f, 72f, -36f, -72f };
     private float[] rayResults = new float[5];
 
-    //Member - Tracking
-    public float distanceTraveled { get; private set; }
-    private Vector3 previousPosition;
-
     //Member - Stuck Detection
     private Vector3 lastCheckedPosition;
     private float stuckTimer = 0f;
@@ -33,7 +29,6 @@ public class AIController : MonoBehaviour
     void Start()
     {
         carController = GetComponent<CarController>();
-        previousPosition = transform.position;
         lastCheckedPosition = transform.position;
     }
 
@@ -47,7 +42,6 @@ public class AIController : MonoBehaviour
         carController.SetSteeringInput(0f);
 
         //AI Process
-        TrackData();
         ProcessRayInput();
         ProcessDescision();
 
@@ -68,9 +62,7 @@ public class AIController : MonoBehaviour
         {
             Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * objDirection;
             RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistance, trackLayer);
-            rayResults[i] = hit.fraction;
-
-            //Debug.Log(hit.fraction);
+            rayResults[i] = hit ? hit.fraction : 1f;
 
             Debug.DrawRay(rayStartPosition, rayDirection * rayDistance, hit ? Color.green : Color.red);
         }
@@ -92,17 +84,6 @@ public class AIController : MonoBehaviour
         int index = priorityIndex * 2;
         carController.SetThrottleInput(genes[index]);
         carController.SetSteeringInput(genes[index + 1]);
-    }
-
-    private void TrackData() 
-    {
-        //Track distance traveled.
-        Vector3 currentPosiiton = transform.position;
-
-        //if(currentPosiiton == previousPosition) isActive = false;
-
-        distanceTraveled += Vector3.Distance(currentPosiiton, previousPosition);
-        previousPosition = currentPosiiton;
     }
 
     private void IsStuck()

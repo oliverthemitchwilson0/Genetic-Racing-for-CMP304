@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6812850820461821520}
   - component: {fileID: 1165835051353461265}
   - component: {fileID: 1318147597705049475}
+  - component: {fileID: 9142304167969081402}
   - component: {fileID: 6408864884568228248}
   m_Layer: 6
   m_Name: Car
@@ -175,7 +176,19 @@ MonoBehaviour:
   trackLayer:
     serializedVersion: 2
     m_Bits: 8
-  rayDistance: 2
+  rayDistance: 1.5
+--- !u!114 &9142304167969081402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147923260868387106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d82e653741abd498c20bc5ceb2b579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIFitness
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0
