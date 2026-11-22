@@ -1,0 +1,5 @@
+* Different ray sizes per ray.
+* Updating AI Controller - Updating the decision making between each ray input (Not sure what to).
+* Updating Car Controller Values (Possibly too fast for the size of the car).
+
+* Stretch: Extra genes for custom ray angles.
