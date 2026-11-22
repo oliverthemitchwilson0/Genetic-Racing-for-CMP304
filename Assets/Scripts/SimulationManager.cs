@@ -9,7 +9,7 @@ public class SimulationManager : MonoBehaviour
     public int transferRatio = 10;
     public int crossoverThresholdRatio = 30;
     public int mutateThreshold = 5;
-    private int geneCount = 10;
+    private int geneCount = 12;
 
     //Members
     private GeneticAlgorithm<float> algorithm;

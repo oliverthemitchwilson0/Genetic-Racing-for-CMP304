@@ -7,7 +7,7 @@ public class Individual<T>
     //private Func<int, int> getFitnessData;
 
     //Members
-    public T[] genes { get; private set; }
+    public T[] genes { get; set; }
     public int fitness { get; set; }
 
     public Individual(int size, Func<T> geneGenerator)

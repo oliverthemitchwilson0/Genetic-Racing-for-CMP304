@@ -176,7 +176,7 @@ MonoBehaviour:
   trackLayer:
     serializedVersion: 2
     m_Bits: 8
-  rayDistance: 1.5
+  rayDistance: 0.9
 --- !u!114 &9142304167969081402
 MonoBehaviour:
   m_ObjectHideFlags: 0

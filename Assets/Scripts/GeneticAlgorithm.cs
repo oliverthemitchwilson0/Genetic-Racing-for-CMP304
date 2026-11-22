@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 //Come back to this later: https://stackoverflow.com/questions/14622342/elitism-in-ga-should-i-let-the-elites-be-selected-as-parents
+//https://www.geeksforgeeks.org/dsa/genetic-algorithms/
 public class GeneticAlgorithm<T>
 {
     //Config
@@ -60,18 +61,16 @@ public class GeneticAlgorithm<T>
 
         //Begin crossover between a percentage of the previous generation for the rest of the next generation.
             //Mutate child
-        int crossoverThreshold = maxPopulationSize * crossoverThresholdRatio / 100;
         for(int i = transferCount; i < maxPopulationSize; i++) 
         {
-            //Get references to two random parents.
-            ref Individual<T> a = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
-            ref Individual<T> b = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
+            //Reference to parents
+            Individual<T> a;
+            Individual<T> b;
 
-            while(b == a)
-                b = ref population[UnityEngine.Random.Range(0, crossoverThreshold)];
+            ParentSelection(out a, out b);
 
-            Individual<T> child = SinglePointCrossover(ref a, ref b);
-            Mutate(ref child);
+            Individual<T> child = SinglePointCrossover(a, b);
+            Mutate(child);
 
             nextGeneration[i] = child;
         }
@@ -84,8 +83,36 @@ public class GeneticAlgorithm<T>
         Debug.Log(str);
     }
 
+    private void ParentSelection(out Individual<T> a, out Individual<T> b) 
+    {
+        a = TournamentSelection();
+        b = TournamentSelection();
+
+        while (b == a)
+            b = TournamentSelection();
+    }
+
+    private Individual<T> RandomSelection() 
+    {
+        int crossoverThreshold = maxPopulationSize * crossoverThresholdRatio / 100;
+        return population[UnityEngine.Random.Range(0, crossoverThreshold)];
+    }
+
+    private Individual<T> TournamentSelection(int tournamentSize = 3) 
+    {
+        int bestIndex = UnityEngine.Random.Range(0, maxPopulationSize);
+
+        for(int i = 1; i < tournamentSize; i++) 
+        {
+            int competitorIndex = UnityEngine.Random.Range(0, maxPopulationSize);
+            if (population[competitorIndex].fitness > population[bestIndex].fitness) bestIndex = competitorIndex;
+        }
+
+        return population[bestIndex];
+    }
+
     //Classes in C# are automatically passed by reference 
-    private Individual<T> SinglePointCrossover(ref Individual<T> a, ref Individual<T>b) 
+    private Individual<T> SinglePointCrossover(Individual<T> a, Individual<T>b) 
     {
         //Select random cut point oof gene length.
         int geneLength = a.genes.Length;
@@ -102,7 +129,7 @@ public class GeneticAlgorithm<T>
         return new Individual<T>(in crossedGenes);
     }
 
-    private void Mutate(ref Individual<T> x) 
+    private void Mutate(Individual<T> x) 
     {
         for (int i = 0; i < x.genes.Length; i++)
         {

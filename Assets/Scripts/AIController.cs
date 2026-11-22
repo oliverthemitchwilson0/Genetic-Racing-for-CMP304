@@ -81,7 +81,7 @@ public class AIController : MonoBehaviour
             }
         }
 
-        int index = priorityIndex * 2;
+        int index = (lowestResult >= 1f) ? 10 : priorityIndex * 2; //If not ray is active then manually select gene for open road.
         carController.SetThrottleInput(genes[index]);
         carController.SetSteeringInput(genes[index + 1]);
     }
