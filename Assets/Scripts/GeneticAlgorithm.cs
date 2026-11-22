@@ -7,6 +7,7 @@ public class GeneticAlgorithm<T>
 {
     //Config
     private Func<T> geneGenerator;
+    private Func<T, T> geneMutator;
     private int maxPopulationSize { get; set; }
     private int individualGeneCount { get; set; }
     private int transferRatio { get; set; }
@@ -17,11 +18,12 @@ public class GeneticAlgorithm<T>
     public int generation { get; set; }
     public Individual<T>[] population { get; private set; }
 
-    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, int transferRatio, int crossoverThresholdRatio, int mutateThreshold)
+    public GeneticAlgorithm(int populationSize, int geneCount, Func<T> geneGenerator, Func<T, T> geneMutator, int transferRatio, int crossoverThresholdRatio, int mutateThreshold)
     {
         maxPopulationSize = populationSize;
         individualGeneCount = geneCount;
         this.geneGenerator = geneGenerator;
+        this.geneMutator = geneMutator;
         this.transferRatio = transferRatio;
         this.crossoverThresholdRatio = crossoverThresholdRatio;
         this.mutateThreshold = mutateThreshold;
@@ -48,6 +50,13 @@ public class GeneticAlgorithm<T>
         Array.Sort(population, (a, b) => {
             return b.fitness.CompareTo(a.fitness);
         });
+
+        //Test
+        for (int i = 0; i < population.Length; i++)
+        {
+            string str = i.ToString() + ": " + population[i].fitness.ToString();
+            Debug.Log(str);
+        }
     }
 
     private void CreateNextGeneration() 
@@ -135,7 +144,7 @@ public class GeneticAlgorithm<T>
         {
             if(UnityEngine.Random.Range(0, 100) < mutateThreshold) 
             {
-                x.genes[i] = geneGenerator();
+                x.genes[i] = geneMutator(x.genes[i]);
             }
         }
     }

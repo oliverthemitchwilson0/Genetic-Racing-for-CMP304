@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -3.6, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -189,6 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d82e653741abd498c20bc5ceb2b579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIFitness
+  distanceWeight: 1
+  checkpointWeight: 100
+  lapsWeight: 500
+  speedWeight: 5
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0

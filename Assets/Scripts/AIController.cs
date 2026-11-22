@@ -100,10 +100,14 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private void SetActive(bool active) 
+    public void SetActive(bool active) 
     {
         isActive = active;
-        carController.SetThrottleInput(0f);
-        carController.SetSteeringInput(0f);
+        if (!active) 
+        {
+            carController.SetThrottleInput(0f);
+            carController.SetSteeringInput(0f);
+            GetComponent<SpriteRenderer>().color = Color.gray;
+        }
     }
 }
