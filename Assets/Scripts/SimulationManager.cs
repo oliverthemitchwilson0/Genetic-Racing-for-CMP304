@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SimulationManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class SimulationManager : MonoBehaviour
     public int crossoverThresholdRatio = 30;
     public int mutateThreshold = 5;
     public int mutationRatio = 25;
+
+    [Header("UI")]
+    public Slider simSpeedSlider;
 
     //Members
     private GeneticAlgorithm<float> algorithm;
@@ -32,7 +36,7 @@ public class SimulationManager : MonoBehaviour
     {
         if (simulationCount == 0) return;
 
-        Time.timeScale = simulationSpeed;
+        Time.timeScale = simSpeedSlider.value;
 
         int inactiveCounter = 0;
         foreach (GameObject car in objects)
