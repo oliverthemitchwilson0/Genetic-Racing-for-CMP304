@@ -6,14 +6,19 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     //Config
+    [Header("Ray Config")]
     public LayerMask trackLayer;
-    public float rayDistance = 2f;
+    public float[] rayAngles;
+    public float[] rayDistances;
     private CarController carController;
+
+    //Debug Drawing
+    [Header("Debug Ray Drawing")]
+    public LineRenderer[] lines;
 
     //Member
     public float[] genes { private get; set; }
     public bool isActive { get; private set; } = true;
-    private float[] rayAngles = new float[]{ 0f, 36f, 72f, -36f, -72f };
     private float[] rayResults = new float[5];
 
     //Member - Stuck Detection
@@ -61,10 +66,19 @@ public class AIController : MonoBehaviour
         for (int i = 0; i < rayAngles.Length; i++)
         {
             Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * objDirection;
-            RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistance, trackLayer);
+            RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistances[i], trackLayer);
             rayResults[i] = hit ? hit.fraction : 1f;
 
-            Debug.DrawRay(rayStartPosition, rayDirection * rayDistance, hit ? Color.green : Color.red);
+            //Editor Debug Draw
+            Debug.DrawRay(rayStartPosition, rayDirection * rayDistances[i], hit ? Color.green : Color.red);
+
+            //Game Debug Draw
+            Vector3 hitPosition = rayStartPosition + rayDirection * rayDistances[i];
+            Color color = hit ? Color.green : Color.red;
+            lines[i].SetPosition(0, rayStartPosition);
+            lines[i].SetPosition(1, hitPosition);
+            lines[i].startColor = color;
+            lines[i].endColor = color;
         }
     }
 
@@ -108,6 +122,8 @@ public class AIController : MonoBehaviour
             carController.SetThrottleInput(0f);
             carController.SetSteeringInput(0f);
             GetComponent<SpriteRenderer>().color = Color.gray;
+            for(int i = 0; i < lines.Length; i++)
+                lines[i].enabled = false;
         }
     }
 }

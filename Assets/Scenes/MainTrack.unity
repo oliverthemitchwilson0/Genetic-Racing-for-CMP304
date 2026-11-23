@@ -150,12 +150,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimulationManager
   simulationSpeed: 1
   carPrefab: {fileID: 7147923260868387106, guid: 8ae93d8d33e6ab3478029ab62fd794ec, type: 3}
-  simulationCount: 50
+  simulationCount: 100
   geneCount: 12
   transferRatio: 7
   crossoverThresholdRatio: 35
-  mutateThreshold: 12
-  mutationRatio: 50
+  mutateThreshold: 15
+  mutationRatio: 100
 --- !u!4 &335210602
 Transform:
   m_ObjectHideFlags: 0

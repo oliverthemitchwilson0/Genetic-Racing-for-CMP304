@@ -4,17 +4,21 @@ using UnityEngine.InputSystem;
 //Car Controlling Adapted from: https://www.youtube.com/watch?v=d7IY7mJECRk
 public class CarController : MonoBehaviour
 {
-    public float acceleration = 3.0f;
-    public float friction = 1f;
-    public float maxSpeed = 10.0f;
-    public float steeringStrength = 120.0f;
+    //Config
+    [Header("Config")]
+    public bool debugInput = false;
+    public float acceleration;
+    public float friction;
+    public float maxSpeed;
+    public float steeringStrength;
     public AnimationCurve steerignCurve;
-
     private Rigidbody2D rigidBody;
 
-    public bool debugInput = false;
+    //Members
     private float currentSpeed = 0f;
 
+    //Members - Input
+    [Header("Input")]
     public InputAction throttleDebugInput;
     public InputAction steeringInputAction;
     private float steeringInput = 0f;

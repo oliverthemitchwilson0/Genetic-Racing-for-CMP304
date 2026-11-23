@@ -4,10 +4,10 @@ public class AIFitness : MonoBehaviour
 {
     //Config
     [Header("Weighting Values")]
-    public int distanceWeight = 1;
-    public int checkpointWeight = 100;
-    public int lapsWeight = 500;
-    public int speedWeight = 50;
+    public int distanceWeight;
+    public int checkpointWeight;
+    public int lapsWeight;
+    public int speedWeight;
 
     //Members
     private int checkpointsReached { get; set; } = 0;
