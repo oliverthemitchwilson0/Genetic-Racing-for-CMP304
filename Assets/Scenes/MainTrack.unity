@@ -229,7 +229,7 @@ MonoBehaviour:
   geneCount: 12
   transferRatio: 7
   crossoverThresholdRatio: 35
-  mutateThreshold: 12
+  mutateThreshold: 15
   mutationRatio: 25
   simSpeedSlider: {fileID: 502997016}
 --- !u!4 &335210602

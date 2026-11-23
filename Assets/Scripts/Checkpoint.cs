@@ -10,7 +10,7 @@ public class Checkpoint : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("Car")) 
         {
             AIFitness aiFitness = collision.gameObject.GetComponent<AIFitness>();
-            aiFitness.CheckpointReached(index);
+            aiFitness.SignalCheckpointReached(index, finishLine);
         }
     }
 }
