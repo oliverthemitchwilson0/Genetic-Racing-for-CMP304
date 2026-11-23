@@ -87,7 +87,7 @@ public class SimulationManager : MonoBehaviour
 
     float GeneMutator(float gene) 
     {
-        float mutation = mutationRatio / 100;
+        float mutation = mutationRatio / 100f;
         return Math.Clamp(gene += UnityEngine.Random.Range(-mutation, mutation), -1f, 1f);
     }
 }

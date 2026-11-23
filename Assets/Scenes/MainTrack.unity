@@ -229,8 +229,8 @@ MonoBehaviour:
   geneCount: 12
   transferRatio: 7
   crossoverThresholdRatio: 35
-  mutateThreshold: 15
-  mutationRatio: 100
+  mutateThreshold: 12
+  mutationRatio: 25
   simSpeedSlider: {fileID: 502997016}
 --- !u!4 &335210602
 Transform:
@@ -330,10 +330,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 917105641}
   m_HandleRect: {fileID: 239360845}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 50
+  m_MinValue: 1
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

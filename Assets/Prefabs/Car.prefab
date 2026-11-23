@@ -758,9 +758,9 @@ MonoBehaviour:
   rayDistances:
   - 1.5
   - 1
-  - 0.5
+  - 0.6
   - 1
-  - 0.5
+  - 0.6
   lines:
   - {fileID: 8788447316640075188}
   - {fileID: 245014651660407204}
@@ -779,10 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d82e653741abd498c20bc5ceb2b579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIFitness
-  distanceWeight: 1
   checkpointWeight: 100
-  lapsWeight: 500
-  speedWeight: 5
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,25 +793,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   debugInput: 0
-  acceleration: 6
-  friction: 4.5
-  maxSpeed: 6
+  acceleration: 3
+  friction: 1.5
+  maxSpeed: 5
   steeringStrength: 220
   steerignCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.015029907
-      value: 1.0458374
-      inSlope: -1.5873203
-      outSlope: -1.5873203
+      time: -0.00093078613
+      value: -0.0020980835
+      inSlope: 8.024354
+      outSlope: 8.024354
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.027322708
+      outWeight: 0.038159486
     - serializedVersion: 3
-      time: 1.0151367
-      value: 0.3843956
+      time: 0.3061415
+      value: 0.9435179
+      inSlope: -1.8054862
+      outSlope: -1.8054862
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15975378
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0111213
+      value: 0.5004939
       inSlope: 0.0074345293
       outSlope: 0.0074345293
       tangentMode: 0
