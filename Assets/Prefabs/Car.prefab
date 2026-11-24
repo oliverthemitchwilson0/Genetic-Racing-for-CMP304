@@ -794,9 +794,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   debugInput: 0
-  acceleration: 3
+  acceleration: 6
   friction: 1.5
-  maxSpeed: 5
+  maxSpeed: 8
   steeringStrength: 160
   steerignCurve:
     serializedVersion: 2
@@ -811,17 +811,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.038159486
     - serializedVersion: 3
-      time: 0.3061415
-      value: 0.9435179
-      inSlope: -1.8054862
-      outSlope: -1.8054862
+      time: 0.30694216
+      value: 0.9892345
+      inSlope: -1.1218829
+      outSlope: -1.1218829
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.15975378
-      outWeight: 0.33333334
+      outWeight: 0.046086177
     - serializedVersion: 3
       time: 1.0111213
-      value: 0.5004939
+      value: 0.70381725
       inSlope: 0.0074345293
       outSlope: 0.0074345293
       tangentMode: 0

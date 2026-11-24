@@ -38,10 +38,10 @@ public class AIController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!isActive) return;
-        if(genes.Length == 0) return;
+        if (genes.Length == 0) return;
 
         carController.SetThrottleInput(1f);
         carController.SetSteeringInput(0f);
