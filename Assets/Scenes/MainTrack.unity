@@ -229,7 +229,7 @@ MonoBehaviour:
   geneCount: 12
   transferRatio: 7
   crossoverThresholdRatio: 35
-  mutateThreshold: 15
+  mutateThreshold: 20
   mutationRatio: 25
   simSpeedSlider: {fileID: 502997016}
 --- !u!4 &335210602
@@ -283,7 +283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 614, y: 288}
+  m_AnchoredPosition: {x: 451, y: 168}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &502997016
@@ -515,7 +515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 614, y: 333}
+  m_AnchoredPosition: {x: 451, y: 213}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741797141

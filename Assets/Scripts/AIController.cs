@@ -38,7 +38,7 @@ public class AIController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!isActive) return;
         if(genes.Length == 0) return;
