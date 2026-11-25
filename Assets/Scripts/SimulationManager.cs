@@ -9,12 +9,12 @@ public class SimulationManager : MonoBehaviour
     [Header("Simulation Config")]
     public float simulationSpeed = 1f;
     public GameObject carPrefab;
-    public int simulationCount = 30;
-    public int geneCount = 12;
-    public int transferRatio = 10;
-    public int tournamentSize = 30;
-    public int mutateThreshold = 5;
-    public int mutationRatio = 25;
+    public int simulationCount;
+    public int geneCount;
+    public int transferRatio;
+    public int tournamentSize;
+    public int mutateThreshold;
+    public int geneModifyRatio;
 
     //Config - UI
     [Header("UI")]
@@ -31,6 +31,8 @@ public class SimulationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        string str = Application.persistentDataPath;
+        Debug.Log(str);
     }
 
     // Update is called once per frame
@@ -106,7 +108,7 @@ public class SimulationManager : MonoBehaviour
 
     float GeneMutator(float gene) 
     {
-        float mutation = mutationRatio / 100f;
+        float mutation = geneModifyRatio / 100f;
         return Math.Clamp(gene += UnityEngine.Random.Range(-mutation, mutation), -1f, 1f);
     }
 
@@ -114,11 +116,22 @@ public class SimulationManager : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/FitnessLog.txt";
 
+        //Temp
+        float bestTime = float.MinValue;
+        for (int i = 0; i < simulationCount; i++)
+        {
+            if(aiFitness[i].FinishTime() > bestTime) 
+            {
+                bestTime = aiFitness[i].FinishTime();
+            }
+        }
+
         string[] content =
         {
             "Generation: " + algorithm.generation.ToString(),
             "   Best Fitness: " + algorithm.GetBestFitness().ToString(),
             "   Average Fitness: " + algorithm.GetAverageFitness().ToString(),
+            "   Best Time: " + bestTime.ToString(),
         };
 
         File.AppendAllLines(path, content);

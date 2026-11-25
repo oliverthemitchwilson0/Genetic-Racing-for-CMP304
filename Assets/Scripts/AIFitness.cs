@@ -55,4 +55,13 @@ public class AIFitness : MonoBehaviour
     {
         timeAlive += Time.fixedDeltaTime;
     }
+
+    public float FinishTime() 
+    {
+        if(lapsCompleted >= 3) 
+        {
+            return timeAlive;
+        }
+        return 0f;
+    }
 }
