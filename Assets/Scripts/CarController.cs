@@ -7,11 +7,7 @@ public class CarController : MonoBehaviour
     //Config
     [Header("Config")]
     public bool debugInput = false;
-    public float acceleration;
-    public float friction;
-    public float maxSpeed;
-    public float steeringStrength;
-    public AnimationCurve steerignCurve;
+    public CarConfig config;
     private Rigidbody2D rigidBody;
 
     //Members
@@ -57,13 +53,13 @@ public class CarController : MonoBehaviour
             input = throttleInput;
 
         if (input != 0.0f)   //Throttle Positive: Accelerate.
-            currentSpeed += ((acceleration * input) * Time.fixedDeltaTime);
+            currentSpeed += ((config.acceleration * input) * Time.fixedDeltaTime);
         else                        //Throttle anything else: apply friction.
-            currentSpeed -= friction * Time.fixedDeltaTime;
+            currentSpeed -= config.friction * Time.fixedDeltaTime;
 
         //Possibly add braking for negative throttleInput.
 
-        currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
+        currentSpeed = Mathf.Clamp(currentSpeed, 0f, config.maxSpeed);
         rigidBody.linearVelocity = transform.up * currentSpeed;
     }
 
@@ -75,8 +71,8 @@ public class CarController : MonoBehaviour
         else
             input = steeringInput;
 
-        float speedFraction = currentSpeed / maxSpeed; //Shift speed between 0 - 1 for curve evaluation.
-        float steerFactor = steerignCurve.Evaluate(speedFraction) * steeringStrength; //Find the steer fact
+        float speedFraction = currentSpeed / config.maxSpeed; //Shift speed between 0 - 1 for curve evaluation.
+        float steerFactor = config.steeringCurve.Evaluate(speedFraction) * config.steeringStrength; //Find the steer fact
         rigidBody.MoveRotation(rigidBody.rotation - (steerFactor * input) * Time.fixedDeltaTime);
     }
 

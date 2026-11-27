@@ -746,21 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ca45753faacfd4fb1ca71982cf9908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIController
-  trackLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  rayAngles:
-  - 0
-  - 36
-  - 72
-  - -36
-  - -72
-  rayDistances:
-  - 1.8
-  - 0.9
-  - 0.5
-  - 0.9
-  - 0.5
+  rayConfig: {fileID: 11400000, guid: 0874f96f51c11304c8a944b85d5cd223, type: 2}
   lines:
   - {fileID: 8788447316640075188}
   - {fileID: 245014651660407204}
@@ -779,8 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d82e653741abd498c20bc5ceb2b579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIFitness
-  checkpointWeight: 100
-  fastTimeWeight: 10000
+  weightConfig: {fileID: 11400000, guid: e4b6a47ffb648d64c96c5c89e2ae0f62, type: 2}
 --- !u!114 &6408864884568228248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,43 +779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   debugInput: 0
-  acceleration: 6
-  friction: 1.5
-  maxSpeed: 8
-  steeringStrength: 160
-  steerignCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.00093078613
-      value: -0.0020980835
-      inSlope: 8.024354
-      outSlope: 8.024354
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.038159486
-    - serializedVersion: 3
-      time: 0.30694216
-      value: 0.9892345
-      inSlope: -1.1218829
-      outSlope: -1.1218829
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.15975378
-      outWeight: 0.046086177
-    - serializedVersion: 3
-      time: 1.0127082
-      value: 0.65035045
-      inSlope: 0.0074345293
-      outSlope: 0.0074345293
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.045329176
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  config: {fileID: 11400000, guid: fa740e4c4c2b96a49a9d16a78e6e01f9, type: 2}
   throttleDebugInput:
     m_Name: Throttle Debug Input
     m_Type: 0

@@ -4,8 +4,7 @@ public class AIFitness : MonoBehaviour
 {
     //Config
     [Header("Weighting Values")]
-    public int checkpointWeight;
-    public int fastTimeWeight;
+    public FitnessConfig weightConfig;
 
     //Members
     private int checkpointsReached { get; set; } = 0;
@@ -41,8 +40,8 @@ public class AIFitness : MonoBehaviour
     public int EvaluateFitness() 
     {
         int fitness = 0;
-        fitness += checkpointsReached * checkpointWeight;
-        fitness += (lapsCompleted >= 3) ? Mathf.RoundToInt(fastTimeWeight / timeAlive) : 0;
+        fitness += checkpointsReached * weightConfig.checkpointWeight;
+        fitness += (lapsCompleted >= 3) ? Mathf.RoundToInt(weightConfig.fastTimeWeight / timeAlive) : 0;
         return fitness;
     }
 

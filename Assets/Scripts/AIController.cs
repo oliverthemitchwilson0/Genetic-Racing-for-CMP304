@@ -7,9 +7,7 @@ public class AIController : MonoBehaviour
 {
     //Config
     [Header("Ray Config")]
-    public LayerMask trackLayer;
-    public float[] rayAngles;
-    public float[] rayDistances;
+    public AIConfig rayConfig;
     private CarController carController;
 
     //Debug Drawing
@@ -63,17 +61,17 @@ public class AIController : MonoBehaviour
     {
         Vector3 rayStartPosition = transform.position;
         Vector3 objDirection = transform.up;
-        for (int i = 0; i < rayAngles.Length; i++)
+        for (int i = 0; i < rayConfig.rayAngles.Length; i++)
         {
-            Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayAngles[i]) * objDirection;
-            RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayDistances[i], trackLayer);
+            Vector3 rayDirection = Quaternion.Euler(0f, 0f, rayConfig.rayAngles[i]) * objDirection;
+            RaycastHit2D hit = Physics2D.Raycast(rayStartPosition, rayDirection, rayConfig.rayDistances[i], rayConfig.trackLayer);
             rayResults[i] = hit ? hit.fraction : 1f;
 
             //Editor Debug Draw
-            Debug.DrawRay(rayStartPosition, rayDirection * rayDistances[i], hit ? Color.green : Color.red);
+            Debug.DrawRay(rayStartPosition, rayDirection * rayConfig.rayDistances[i], hit ? Color.green : Color.red);
 
             //Game Debug Draw
-            Vector3 hitPosition = rayStartPosition + rayDirection * rayDistances[i];
+            Vector3 hitPosition = rayStartPosition + rayDirection * rayConfig.rayDistances[i];
             Color color = hit ? Color.green : Color.red;
             lines[i].SetPosition(0, rayStartPosition);
             lines[i].SetPosition(1, hitPosition);
